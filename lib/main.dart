@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          leading: const Icon(Icons.task_alt_outlined),
+          backgroundColor: Colors.purple,
           foregroundColor: Colors.white,
           title: const Text("Tarefas"),
         ),
@@ -54,10 +55,10 @@ class _TaskState extends State<Task> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Stack(
         children: [
-          Container(color: Colors.blue, height: 140),
+          Container(color: Colors.purple, height: 140),
           Column(
             children: [
               Container(
@@ -74,7 +75,7 @@ class _TaskState extends State<Task> {
                       SizedBox(
                         width: 200,
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Text(
                             widget.nome,
                             style: const TextStyle(
@@ -84,30 +85,40 @@ class _TaskState extends State<Task> {
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              nivel++;
-                            });
-                          },
-                          child: const Icon(Icons.arrow_drop_up))
+                      SizedBox(
+                        height: 50,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                nivel++;
+                              });
+                            },
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(Icons.arrow_drop_up,),
+                                Text("Up", style: TextStyle(fontSize: 15),)
+                              ],
+                            )),
+                      )
                     ]),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
                       width: 200,
                       child: LinearProgressIndicator(
-                        color: Colors.amberAccent,
+                        color: const Color.fromARGB(255, 77, 255, 64),
                         value: nivel/10,
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Text(
                       "Nivel $nivel",
                       style: const TextStyle(color: Colors.white, fontSize: 16),
