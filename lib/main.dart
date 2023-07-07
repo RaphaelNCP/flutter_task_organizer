@@ -50,9 +50,9 @@ class Task extends StatefulWidget {
 }
 
 class _TaskState extends State<Task> {
+  int nivel = 0;
   @override
   Widget build(BuildContext context) {
-    int nivel = 0;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(
@@ -73,25 +73,48 @@ class _TaskState extends State<Task> {
                       ),
                       SizedBox(
                         width: 200,
-                        child: Text(
-                          widget.nome,
-                          style: const TextStyle(
-                            fontSize: 24,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            widget.nome,
+                            style: const TextStyle(
+                              fontSize: 24,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            nivel++;
+                            setState(() {
+                              nivel++;
+                            });
                           },
                           child: const Icon(Icons.arrow_drop_up))
                     ]),
               ),
-              Text(
-                "Nivel $nivel",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              )
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 200,
+                      child: LinearProgressIndicator(
+                        color: Colors.amberAccent,
+                        value: nivel/10,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Nivel $nivel",
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ],
