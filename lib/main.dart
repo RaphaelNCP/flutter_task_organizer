@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool opacidade = true;
 
   @override
   Widget build(BuildContext context) {
@@ -22,32 +29,42 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white,
           title: const Text("Tarefas"),
         ),
-        body: ListView(
-          children: const [
-            Task(
-                "Aprender Flutter",
-                "https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large",
-                3),
-            Task(
-                "Jogar RPG",
-                "https://www.orcnroll.com/wp-content/uploads/2019/10/image-1024x693.jpeg",
-                1),
-            Task(
-                "Ver Serie",
-                "https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2023/01/cats.jpg",
-                1),
-            Task(
-                "Jogar",
-                "https://t3.ftcdn.net/jpg/05/51/95/66/360_F_551956671_wQRNi3SEqgA5APbPQexv4fnOx0iTa8cE.jpg",
-                2),
-            Task(
-                "Estudar",
-                "https://foconoenem.com/wp-content/uploads/2022/06/como-estudar-sozinho-para-o-Enem-.png",
-                5)
-          ],
+        body: AnimatedOpacity(
+          opacity: opacidade ? 1 : 0,
+          duration: const Duration(milliseconds: 800),
+          child: ListView(
+            children: const [
+              Task(
+                  "Aprender Flutter",
+                  "https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large",
+                  3),
+              Task(
+                  "Jogar RPG",
+                  "https://www.orcnroll.com/wp-content/uploads/2019/10/image-1024x693.jpeg",
+                  1),
+              Task(
+                  "Ver Serie",
+                  "https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2023/01/cats.jpg",
+                  1),
+              Task(
+                  "Jogar",
+                  "https://t3.ftcdn.net/jpg/05/51/95/66/360_F_551956671_wQRNi3SEqgA5APbPQexv4fnOx0iTa8cE.jpg",
+                  2),
+              Task(
+                  "Estudar",
+                  "https://foconoenem.com/wp-content/uploads/2022/06/como-estudar-sozinho-para-o-Enem-.png",
+                  5)
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            setState(() {
+              opacidade = !opacidade;
+              
+            });
+          },
+          child: Icon(Icons.remove_red_eye_outlined),
         ),
       ),
     );
@@ -70,24 +87,27 @@ class _TaskState extends State<Task> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
+      padding: const EdgeInsets.all(8),
       child: Stack(
         children: [
-          Container(color: Colors.purple, height: 140),
+          Container( height: 140, decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: Colors.purple
+          ),),
           Column(
             children: [
               Container(
-                color: Colors.white,
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0), color: Colors.white),
                 height: 100,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        color: Colors.white,
-                        width: 100,
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: Colors.white,),
+                        width: 90,
                         height: 100,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
                           child: Image.network(
                             widget.foto,
                             fit: BoxFit.cover,
@@ -101,7 +121,7 @@ class _TaskState extends State<Task> {
                           SizedBox(
                             width: 180,
                             child: Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 widget.nome,
                                 style: const TextStyle(
@@ -111,7 +131,7 @@ class _TaskState extends State<Task> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
+                            padding: const EdgeInsets.only(left: 8.0),
                             child: Row(
                               children: [
                                 Icon(
@@ -146,28 +166,25 @@ class _TaskState extends State<Task> {
                       ),
                       SizedBox(
                         height: 50,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  nivel++;
-                                });
-                              },
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.arrow_drop_up,
-                                  ),
-                                  Text(
-                                    "Up",
-                                    style: TextStyle(fontSize: 15),
-                                  )
-                                ],
-                              )),
-                        ),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                nivel++;
+                              });
+                            },
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.arrow_drop_up,
+                                ),
+                                Text(
+                                  "Up",
+                                  style: TextStyle(fontSize: 15),
+                                )
+                              ],
+                            )),
                       )
                     ]),
               ),
