@@ -24,13 +24,14 @@ class MyApp extends StatelessWidget {
         ),
         body: ListView(
           children: const [
-            Task("Aprender Flutter"),
-            Task("Jogar RPG"),
-            Task("Ver Serie"),
-            Task("Ver Serie"),
-            Task("Ver Serie"),
-            Task("Ver Serie"),
-            Task("Ver Serie"),
+            Task("Aprender Flutter",
+                "https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large"),
+            Task("Jogar RPG",
+                "https://www.orcnroll.com/wp-content/uploads/2019/10/image-1024x693.jpeg"),
+            Task("Ver Serie",
+                "https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2023/01/cats.jpg"),
+            Task("Jogar",
+                "https://t3.ftcdn.net/jpg/05/51/95/66/360_F_551956671_wQRNi3SEqgA5APbPQexv4fnOx0iTa8cE.jpg"),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -43,8 +44,9 @@ class MyApp extends StatelessWidget {
 
 class Task extends StatefulWidget {
   final String nome;
+  final String foto;
 
-  const Task(this.nome, {super.key});
+  const Task(this.nome, this.foto, {super.key});
 
   @override
   State<Task> createState() => _TaskState();
@@ -68,39 +70,73 @@ class _TaskState extends State<Task> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        color: Colors.black26,
-                        width: 72,
+                        color: Colors.white,
+                        width: 100,
                         height: 100,
-                      ),
-                      SizedBox(
-                        width: 200,
                         child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            widget.nome,
-                            style: const TextStyle(
-                              fontSize: 24,
-                            ),
-                            overflow: TextOverflow.ellipsis,
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Image.network(
+                            widget.foto,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 180,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                widget.nome,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10.0),
+                            child: Row(
+                              children: [
+                                Icon(Icons.star, size: 15, color: Colors.purpleAccent,),
+                                Icon(Icons.star, size: 15, color: Colors.purpleAccent,),
+                                Icon(Icons.star, size: 15, color: Colors.purpleAccent,),
+                                Icon(Icons.star, size: 15, color: Color.fromARGB(100, 223, 64, 251),),
+                                Icon(Icons.star, size: 15, color: Color.fromARGB(100, 223, 64, 251),),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                       SizedBox(
                         height: 50,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                nivel++;
-                              });
-                            },
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(Icons.arrow_drop_up,),
-                                Text("Up", style: TextStyle(fontSize: 15),)
-                              ],
-                            )),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right:8.0),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  nivel++;
+                                });
+                              },
+                              child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.arrow_drop_up,
+                                  ),
+                                  Text(
+                                    "Up",
+                                    style: TextStyle(fontSize: 15),
+                                  )
+                                ],
+                              )),
+                        ),
                       )
                     ]),
               ),
@@ -113,7 +149,7 @@ class _TaskState extends State<Task> {
                       width: 200,
                       child: LinearProgressIndicator(
                         color: const Color.fromARGB(255, 77, 255, 64),
-                        value: nivel/10,
+                        value: nivel / 10,
                       ),
                     ),
                   ),
