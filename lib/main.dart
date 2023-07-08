@@ -24,14 +24,26 @@ class MyApp extends StatelessWidget {
         ),
         body: ListView(
           children: const [
-            Task("Aprender Flutter",
-                "https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large"),
-            Task("Jogar RPG",
-                "https://www.orcnroll.com/wp-content/uploads/2019/10/image-1024x693.jpeg"),
-            Task("Ver Serie",
-                "https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2023/01/cats.jpg"),
-            Task("Jogar",
-                "https://t3.ftcdn.net/jpg/05/51/95/66/360_F_551956671_wQRNi3SEqgA5APbPQexv4fnOx0iTa8cE.jpg"),
+            Task(
+                "Aprender Flutter",
+                "https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large",
+                3),
+            Task(
+                "Jogar RPG",
+                "https://www.orcnroll.com/wp-content/uploads/2019/10/image-1024x693.jpeg",
+                1),
+            Task(
+                "Ver Serie",
+                "https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2023/01/cats.jpg",
+                1),
+            Task(
+                "Jogar",
+                "https://t3.ftcdn.net/jpg/05/51/95/66/360_F_551956671_wQRNi3SEqgA5APbPQexv4fnOx0iTa8cE.jpg",
+                2),
+            Task(
+                "Estudar",
+                "https://foconoenem.com/wp-content/uploads/2022/06/como-estudar-sozinho-para-o-Enem-.png",
+                5)
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -45,8 +57,9 @@ class MyApp extends StatelessWidget {
 class Task extends StatefulWidget {
   final String nome;
   final String foto;
+  final int dificuldade;
 
-  const Task(this.nome, this.foto, {super.key});
+  const Task(this.nome, this.foto, this.dificuldade, {super.key});
 
   @override
   State<Task> createState() => _TaskState();
@@ -92,22 +105,40 @@ class _TaskState extends State<Task> {
                               child: Text(
                                 widget.nome,
                                 style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold
-                                ),
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10.0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
                             child: Row(
                               children: [
-                                Icon(Icons.star, size: 15, color: Colors.purpleAccent,),
-                                Icon(Icons.star, size: 15, color: Colors.purpleAccent,),
-                                Icon(Icons.star, size: 15, color: Colors.purpleAccent,),
-                                Icon(Icons.star, size: 15, color: Color.fromARGB(100, 223, 64, 251),),
-                                Icon(Icons.star, size: 15, color: Color.fromARGB(100, 223, 64, 251),),
+                                Icon(
+                                  Icons.star,
+                                  size: 15,
+                                  color: (widget.dificuldade >= 1) ? Colors.purpleAccent : const Color.fromARGB(100, 223, 64, 251),
+                                ),
+                                Icon(
+                                  Icons.star,
+                                  size: 15,
+                                  color: (widget.dificuldade >= 2) ? Colors.purpleAccent : const Color.fromARGB(100, 223, 64, 251),
+                                ),
+                                Icon(
+                                  Icons.star,
+                                  size: 15,
+                                  color: (widget.dificuldade >= 3) ? Colors.purpleAccent : const Color.fromARGB(100, 223, 64, 251),
+                                ),
+                                Icon(
+                                  Icons.star,
+                                  size: 15,
+                                  color: (widget.dificuldade >= 4) ? Colors.purpleAccent : const Color.fromARGB(100, 223, 64, 251),
+                                ),
+                                Icon(
+                                  Icons.star,
+                                  size: 15,
+                                  color: (widget.dificuldade >= 5) ? Colors.purpleAccent : const Color.fromARGB(100, 223, 64, 251),
+                                ),
                               ],
                             ),
                           ),
@@ -116,7 +147,7 @@ class _TaskState extends State<Task> {
                       SizedBox(
                         height: 50,
                         child: Padding(
-                          padding: const EdgeInsets.only(right:8.0),
+                          padding: const EdgeInsets.only(right: 8.0),
                           child: ElevatedButton(
                               onPressed: () {
                                 setState(() {
@@ -149,7 +180,7 @@ class _TaskState extends State<Task> {
                       width: 200,
                       child: LinearProgressIndicator(
                         color: const Color.fromARGB(255, 77, 255, 64),
-                        value: nivel / 10,
+                        value: (widget.dificuldade > 0) ? (nivel/widget.dificuldade) / 10 : 1,
                       ),
                     ),
                   ),
